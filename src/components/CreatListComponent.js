@@ -6,14 +6,24 @@ export class CreatListComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lists: []
+            lists: [],
+            listName: ""    
         }
         this.createList = this.createList.bind(this);
+        this.updateInput = this.updateInput.bind(this);
     }
-
+    
+    updateInput(event) {
+        this.setState({
+            listName: event.target.value
+        })
+        
+    };
     createList() {
         console.log('create a list')
-        const listName = 'z czapy'
+        
+
+
         // this.state.lists.push(
         //     React.createElement(SingleListComponent, {
             
@@ -27,11 +37,12 @@ export class CreatListComponent extends React.Component {
             lists: [
                 this.state.lists.concat(
                     React.createElement(SingleListComponent, {
-                        title: listName,
+                        title: this.state.listName,
                         key: Math.floor(Date.now() / 1000)
                     })
                 )
             ]
+        
         })
     }
 
@@ -43,6 +54,7 @@ export class CreatListComponent extends React.Component {
                         <div className="col">
                             <input
                                 type="text"
+                                onChange={this.updateInput}
                                 className="form-control"
                                 name="list" id="list"
                                 placeholder="Create a list"
