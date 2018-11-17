@@ -14,6 +14,7 @@ export class CreatListComponent extends React.Component {
     }
     
     updateInput(event) {
+        console.log('updateInput '+ event.target.value)
         this.setState({
             listName: event.target.value
         })
@@ -21,17 +22,7 @@ export class CreatListComponent extends React.Component {
     };
     createList() {
         console.log('create a list')
-        
-
-
-        // this.state.lists.push(
-        //     React.createElement(SingleListComponent, {
-            
-        //         title: listName,
-            
-        //         key: Math.floor(Date.now() / 1000)
-        //     })
-        // )
+    
         console.log(this.state.lists)
         this.setState({
             lists: [
@@ -49,9 +40,9 @@ export class CreatListComponent extends React.Component {
     render() {
         return (
             <div className="container">
-                <div className="row justify-content-center">
-                    <div className="row">
-                        <div className="col">
+                <div className="row justify-content-center input-group">
+                    
+                        <div className="col-6 px-1">
                             <input
                                 type="text"
                                 onChange={this.updateInput}
@@ -61,20 +52,16 @@ export class CreatListComponent extends React.Component {
                                 required>
                             </input>
                         </div>
-                        <div className="col">
+                        <div className="col-2 px-1">
                             <button
                                 onClick={this.createList}
                                 className="btn btn-primary btn-block">
                                 Create
                                 </button>
-                        </div>
-
-
-                    </div>
+                        </div>  
                 </div>
-                {/* tutaj wyswietl zmienna z input#list */}
-                <br/>
                 {this.state.lists}
+                <SingleListComponent />
 
             </div>
         )

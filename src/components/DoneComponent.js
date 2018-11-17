@@ -6,8 +6,8 @@ export class DoneComponent extends React.Component {
         return (
             <div>
                 <div>
-                    <h6>Done</h6>
-                   <CheckboxComponent />
+                    <h6>{this.props.titleDone}</h6>
+                    <CheckboxComponent />
                 </div>
             </div>
         )
