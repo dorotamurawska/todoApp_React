@@ -7,4 +7,12 @@ body {
  
 }
 
+.styleCheckboxElement {
+  padding: 2px;
+  color: blue;
+}
+
+.todoInput {
+  width: 50%;
+}
 
