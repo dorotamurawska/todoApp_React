@@ -35,6 +35,9 @@ export class CreatListComponent extends React.Component {
             ]
         
         })
+        this.setState({
+            listName: ""
+        })
     }
 
     render() {
@@ -42,10 +45,14 @@ export class CreatListComponent extends React.Component {
             <div className="container">
                 <div className="row justify-content-center input-group">
                     
+                        
+                        
+                        
                         <div className="col-6 px-1">
                             <input
                                 type="text"
                                 onChange={this.updateInput}
+                                value={this.state.listName}
                                 className="form-control"
                                 name="list" id="list"
                                 placeholder="Create a list"
