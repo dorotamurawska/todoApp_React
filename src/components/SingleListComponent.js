@@ -6,8 +6,8 @@ class Task {
     constructor(label) {
         this.label = label;
         this.checked = false;
-        this.id = Math.floor(Date.now() / 1000);
-        this.formRef = React.createRef();
+        this.id = Math.floor(Date.now() / 1000*Math.random());
+        
 
 
 
@@ -21,7 +21,7 @@ export class SingleListComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: [new Task("posprzatac"), new Task("posprzatac2"), new Task("posprzatac3")],
+            tasks: [],
             inputTaskLabel: "",
             warningText: ""
 
@@ -60,14 +60,14 @@ export class SingleListComponent extends React.Component {
             })
         } else {
 
-         //   this.state.tasks.push(new Task(this.state.inputTaskLabel))
-         const node = ReactDOM.findDOMNode(this.refs.formRef);
-         node.classList.remove("was-validated");   
-         this.setState({
+            //   this.state.tasks.push(new Task(this.state.inputTaskLabel))
+            const node = ReactDOM.findDOMNode(this.refs.formRef);
+            node.classList.remove("was-validated");
+            this.setState({
                 warningText: "",
                 tasks: this.state.tasks.concat(new Task(trimCheckInputValue))
             })
-          
+
         }
 
         this.setState({
@@ -93,16 +93,25 @@ export class SingleListComponent extends React.Component {
                                 oneTask.checked = !oneTask.checked;
                                 console.log(oneTask);
                                 this.setState(
-
                                     this.state
                                 )
-
                             },
-
                             className: 'form-check-input', key: Math.floor(Date.now() * Math.random())
                         }
                     ),
-                    oneTask.label
+                    oneTask.label,
+                    React.createElement('a',
+                        {
+                            href: "#",
+                            className: 'fas fa-times mx-2 text-black-50',
+                            onClick: (event) => {
+                                
+                                this.setState({
+                                    tasks: this.state.tasks.filter((i) => i.id !== oneTask.id)
+                                }
+                                )
+                            }
+                        }, ),
                 )
             )
         }
@@ -134,6 +143,7 @@ export class SingleListComponent extends React.Component {
         // true    | true
 
         //add two const with checked and unchecked propertis
+
 
 
 
