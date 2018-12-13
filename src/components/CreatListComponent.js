@@ -2,9 +2,7 @@ import React from 'react';
 import { SingleListComponent } from './SingleListComponent';
 import ReactDOM from 'react-dom';
 
-
 export class CreatListComponent extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -17,50 +15,50 @@ export class CreatListComponent extends React.Component {
     }
 
     updateInput(event) {
-        console.log('updateInput ' + event.target.value)
         this.setState({
             listName: event.target.value
         })
-
     };
-    createList() {
-        //  console.log('create a list')
 
-        //   console.log(this.state.lists)
+    createList() {
         const checkInputValue = this.state.listName;
         const trimCheckInputValue = checkInputValue.trim();
-
+        console.log('lkkkk');
         if (trimCheckInputValue.length === 0) {
-            const node = ReactDOM.findDOMNode(this.refs.formRef);
+            const node = ReactDOM.findDOMNode(this.refs.mainFormRef);
             node.classList.add("was-validated");
             this.setState({
                 warningTextList: "Non empty list name is required"
             })
         } else if (trimCheckInputValue.length > 20) {
-            const node = ReactDOM.findDOMNode(this.refs.formRef);
+            const node = ReactDOM.findDOMNode(this.refs.mainFormRef);
             node.classList.add("was-validated");
             this.setState({
-                warningTextList: "list name is too long"
+                warningTextList: "List name is too long"
             })
         } else {
-
-            
-            const node = ReactDOM.findDOMNode(this.refs.formRef);
+            const node = ReactDOM.findDOMNode(this.refs.mainFormRef);
             node.classList.remove("was-validated");
+            const compKey = Math.floor(Date.now() / 1000);
             this.setState({
                 warningTextList: "",
-                lists: [
+                lists:
                     this.state.lists.concat(
                         React.createElement(SingleListComponent, {
                             title: this.state.listName,
-                            key: Math.floor(Date.now() / 1000)
+                            key: compKey,
+                            onDelete: () => {
+                                this.setState({
+                                    lists: this.state.lists.filter((item) => {
+                                        return parseInt(item.key) !== compKey
+                                    }
+                                    )
+                                })
+                            }
                         })
                     )
-                ]
             })
-
         }
-
         this.setState({
             listName: ""
         })
@@ -70,39 +68,33 @@ export class CreatListComponent extends React.Component {
         return (
             <div className="container">
                 <div className="row justify-content-center">
-
-                    <form className="" ref="formRef">
+                    <form className="" ref="mainFormRef">
                         <div className="input-group">
-
                             <div className="col-9 px-1">
                                 <input
                                     type="text"
                                     onChange={this.updateInput}
                                     value={this.state.listName}
-                                    className="form-control mw-100"
+                                    className="form-control"
                                     name="list" id="list"
                                     placeholder="Create a list"
-                                    required>
+                                    required
+                                >
                                 </input>
                                 <div className="invalid-feedback">{this.state.warningTextList}</div>
-
                             </div>
-
-                            <div className="col-3 px-1 w-60">
+                            <div className="col-3 px-1">
                                 <button
+                                    type="button"
                                     onClick={this.createList}
                                     className="btn btn-primary btn-block">
                                     Create
                                 </button>
-
                             </div>
-
                         </div>
                     </form>
                 </div>
                 {this.state.lists}
-             
-
             </div>
         )
     };
